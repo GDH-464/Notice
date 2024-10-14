@@ -1,8 +1,11 @@
 package com.example.Notice.Service;
 
+import com.example.Notice.Dto.CommentDTO;
+import com.example.Notice.Dto.CommentGetDTO;
 import com.example.Notice.Dto.FileDTO;
 import com.example.Notice.Dto.NoticeDTO;
 import com.example.Notice.Entity.*;
+import com.example.Notice.Repository.CommentRepository;
 import com.example.Notice.Repository.FileRepository;
 import com.example.Notice.Repository.MemberRepository;
 import com.example.Notice.Repository.NoticeRepository;
@@ -22,7 +25,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -40,6 +42,7 @@ public class NoticeServiceimpl implements NoticeService {
     private final MemberRepository memberRepository;
     private final NoticeRepository noticeRepository;
     private final FileRepository fileRepository;
+    private final CommentRepository commentRepository;
     @Override
     public NoticeEntity write_proc(NoticeDTO notice)
     {
@@ -284,5 +287,17 @@ public class NoticeServiceimpl implements NoticeService {
         } catch (IOException ex) {
             return ResponseEntity.status(500).build();
         }
+    }
+    @Override
+    public Map<String, String> commentadd(CommentGetDTO commentGetDTO)
+    {
+        CommentDTO commentDTO = new CommentDTO();
+        commentDTO.setUserid(commentGetDTO.getUserid());
+        commentDTO.setNick(commentGetDTO.getNick());
+        commentDTO.setContent(commentGetDTO.getComment());
+        commentDTO.setNotice(noticeRepository.findByIdx(Long.valueOf(commentGetDTO.getNoticeidx())).orElse(null));
+        commentRepository.save(commentDTO.tocommententity());
+        Map<String, String> result = new HashMap<>();
+        return result;
     }
 }

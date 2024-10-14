@@ -1,5 +1,6 @@
 package com.example.Notice.Service;
 
+import com.example.Notice.Dto.CommentGetDTO;
 import com.example.Notice.Dto.NoticeDTO;
 import com.example.Notice.Entity.CommentEntity;
 import com.example.Notice.Entity.FileEntity;
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public interface NoticeService {
 
@@ -45,4 +47,6 @@ public interface NoticeService {
     CommentEntity commentEntityadd(String userid, String comment, String nick, Long noticeidx);
 
     ResponseEntity<Resource> download(String idx) throws IOException;
+
+    Map<String, String> commentadd(CommentGetDTO commentGetDTO);
 }

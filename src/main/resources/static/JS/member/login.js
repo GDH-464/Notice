@@ -13,12 +13,11 @@ $(document).ready(()=>{
             return;
      }
     //아이디 비밀번호를 비교하고 세션 생성
-    const sendData = {userid : userid,pwd:pwd}
     $.ajax({
          url: '/login_check',
          method: 'POST',
          contentType: 'application/json',
-         data: JSON.stringify(sendData),
+         data: JSON.stringify({userid : userid,pwd:pwd}),
          dataType: 'json',
          success: function(data)
          {
