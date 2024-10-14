@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>회원 수정</title>
+  <link rel="stylesheet" href="path/to/bootstrap.min.css"> <!-- Bootstrap CSS 경로 -->
+</head>
+<body>
+<div th:fragment="modifymain" class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow">
+        <div class="card-body">
+          <h2 class="text-center mb-4">회원 수정</h2>
+          <form action="/modify_proc" method="post" class="onsubmit" enctype="multipart/form-data">
+            <input type="hidden" name="idx" th:value="${member.idx}">
+            <input type="hidden" name="grade" th:value="${member.grade}">
+
+            <div class="mb-3">
+              <label for="userid" class="form-label">아이디</label>
+              <input type="hidden" name="userid" class="userid" th:value="${member.userid}">
+              <span th:text="${member.userid}" class="form-control-plaintext"></span>
+            </div>
+
+            <div class="mb-3">
+              <label for="pwd" class="form-label">비밀번호</label>
+              <input type="password" class="form-control check-pwd" th:value="${member.pwd}" name="pwd" id="pwd" placeholder="비밀번호를 입력하세요">
+              <input type="hidden" id="pwdcheck" value="true">
+            </div>
+
+            <div class="mb-3">
+              <label for="pwdch" class="form-label">비밀번호 확인</label>
+              <input type="password" class="form-control check-pwd" name="pwdch" id="pwdch" placeholder="비밀번호를 다시 입력하세요">
+              <div id="pwdche" class="form-text"></div>
+            </div>
+
+            <div class="mb-3">
+              <label for="nick" class="form-label">닉네임</label>
+              <input type="text" class="form-control check-nick" th:value="${member.nick}" name="nick" id="nick" placeholder="닉네임을 입력하세요">
+              <input type="hidden" id="nickcheck" value="true">
+              <div id="nickch" class="form-text"></div>
+            </div>
+
+            <div class="mb-3">
+              <label for="name" class="form-label">이름</label>
+              <input type="text" class="form-control" th:value="${member.name}" name="name" id="name">
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">이메일</label>
+              <input type="email" class="form-control" name="email" th:value="${member.email}">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">주소</label>
+              <button type="button" class="btn btn-primary searchAddress">주소찾기</button>
+            </div>
+
+            <div class="mb-3">
+              <label for="postnumber" class="form-label">우편번호</label>
+              <input type="text" class="form-control" name="postnumber" id="postnumber" th:value="${member.postnumber}" readonly>
+            </div>
+
+            <div class="mb-3">
+              <label for="street" class="form-label">도로명</label>
+              <input type="text" class="form-control" name="street" id="street" th:value="${member.street}" readonly>
+            </div>
+
+            <div class="mb-3">
+              <label for="address" class="form-label">나머지주소</label>
+              <input type="text" class="form-control" name="address" th:value="${member.address}">
+            </div>
+
+            <div class="mb-3">
+              <label for="moregdate" class="form-label">가입 날짜</label>
+              <input type="date" class="form-control" name="moregdate" th:value="${#dates.format(member.regdate, 'yyyy-MM-dd')}" readonly>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">아이콘</label>
+              <div>
+                <img style="width:50px; height:50px;" th:src="@{iconimg(idx=${member.idx})}">
+                <input type="hidden" name="existingIcon" class="existingIcon" th:value="${member.icon}">
+              </div>
+              <div th:if="${member.icon} != null">
+                <input type="checkbox" class="deleteicon" name="deleteIcon" value="true"> 삭제
+              </div>
+              <div class="modifyicon1" style="display:none">
+                <input type="file" class="icon" name="icon">
+              </div>
+              <span th:if="${member.icon} == null">없음</span>
+              <br>
+              <input type="file" class="moicon" th:if="${member.icon} == null" name="icon" id="moicon">
+            </div>
+
+            <div class="text-center">
+              <button type="submit" class="btn btn-success">수정하기</button>
+              <button type="button" class="btn btn-secondary returnbtn">돌아가기</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="viewmain">
+  <table>
+    <tr>
+      <th>제목</th>
+      <td>
+        <strong th:if="${notice.grade == 1}" th:text="${notice.title}"></strong>
+        <span th:if="${notice.grade != 1}" th:text="${notice.title}"></span>
+      </td>
+    </tr>
+    <tr>
+      <th>작성자</th>
+      <td th:text="${notice.nick}"></td>
+    </tr>
+    <tr>
+      <th>내용</th>
+      <td style="width:200px;height:300px" th:text="${notice.content}">
+      </td>
+    </tr>
+    <tr>
+      <th>첨부파일</th>
+      <td>
+        <table>
+          <tr th:each="file : ${file}" th:if="${file} !=null">
+            <td>
+              <a th:href="@{/download(idx=${file.idx})}" th:download="${file.ofile}"><span th:text="${file.ofile}"></span></a>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td>작성날짜</td>
+      <td th:text="${notice.regdate}"></td>
+    </tr>
+    <tr>
+      <td colspan="2" style="text-align:center">
+        <button th:if="${notice.member.userid == session.userid}" th:onclick="|location.href='@{/noticemodify(idx=${notice.idx})}'|">수정</button>
+        <button th:if="${notice.member.userid == session.userid || session.grade == 1}" th:onclick="|location.href='@{/noticedelete(idx=${notice.idx})}'|">삭제</button>
+        <button class="returnbtn">돌아가기</button>
+      </td>
+    </tr>
+  </table>
+  <div>
+    <input type="hidden" class="userid" th:value="${session.userid}">
+    <input type="hidden" class="nick" th:value="${session.nick}">
+    <input type="hidden" class="noticeidx" th:value="${notice.idx}">
+    <div class="comment">
+
+    </div>
+    <div th:if="${session.userid != null}">
+      <input type="text" class="commentadd">
+      <button type="button" class="commentaddbtn">등록</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>

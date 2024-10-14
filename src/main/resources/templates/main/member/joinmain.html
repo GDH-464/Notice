@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="joinmain" class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h2 class="text-center mb-4">회원가입</h2>
+                    <form action="join_proc" method="post" class="onsubmit" enctype="multipart/form-data">
+                        <input type="hidden" name="grade" value="2">
+                        <div class="mb-3">
+                            <label for="userid" class="form-label">아이디</label>
+                            <input type="text" class="form-control check-userid" name="userid" id="userid" placeholder="6~20자 알파벳, 숫자만 가능">
+                            <input type="hidden" id="useridcheck" value="false">
+                            <div id="idch" class="form-text"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="pwd" class="form-label">비밀번호</label>
+                            <input type="password" class="form-control check-pwd" name="pwd" id="pwd" placeholder="6~20자 알파벳, 숫자, 특수문자 포함">
+                            <input type="hidden" id="pwdcheck" value="false">
+                        </div>
+                        <div class="mb-3">
+                            <label for="pwdch" class="form-label">비밀번호 확인</label>
+                            <input type="password" class="form-control check-pwd" name="pwdch" id="pwdch" >
+                            <div id="pwdche" class="form-text"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="nick" class="form-label">닉네임</label>
+                            <input type="text" class="form-control check-nick" name="nick" id="nick"  placeholder="2~20자 이상">
+                            <input type="hidden" id="nickcheck" value="false">
+                            <div id="nickch" class="form-text"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">이름</label>
+                            <input type="text" class="form-control" name="name" id="name">
+                        </div>
+                        <div class="mb-3 row">
+                            <div class="col-md-6">
+                                <label for="email" class="form-label">이메일</label>
+                                <input type="text" class="form-control" name="email" id="email">
+                            </div>
+                            <div class="col-md-6" >
+                                <label for="email2" class="form-label">도메인</label>
+                                <div id="emailSelectDiv">
+                                    <select class="form-select" id="email2" name="email2">
+                                        <option value="naver.com">naver.com</option>
+                                        <option value="google.com">google.com</option>
+                                        <option value="hanmail.com">hanmail.com</option>
+                                        <option value="other">직접입력</option>
+                                    </select>
+                                </div>
+                                <div id="option" style="display: none">
+                                    <input type="text" class="form-control mt-2" name="email3" id="email3"  >
+                                    <button type="button" class="btn btn-sm btn-secondary mt-2 emailbtn">선택하기</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="postnumber" class="form-label">우편번호</label>
+                            <button type="button" class="btn btn-primary searchAddress">검색</button>
+                            <input type="text" class="form-control" id="postnumber" name="postnumber" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="street" class="form-label">도로명</label>
+                            <input type="text" class="form-control" id="street" name="street" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label">나머지주소</label>
+                            <input type="text" class="form-control" id="address" name="address">
+                        </div>
+                        <div class="mb-3">
+                            <label for="icon" class="form-label">아이콘으로 쓸 사진</label>
+                            <input type="file" class="form-control" name="icon" id="icon">
+                            <div class="form-text">(jpg, jpeg, png 만 가능)</div>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">가입하기</button>
+                            <button type="button" class="btn btn-secondary returnbtn">돌아가기</button>
+                        </div>
+                        <div class="text-center mt-3">
+                            <button type="button" class="btn btn-warning" id="loginWithKakao">카카오에 연동하기</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

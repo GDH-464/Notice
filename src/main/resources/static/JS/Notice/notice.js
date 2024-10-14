@@ -1,0 +1,14 @@
+$(document).ready(()=>{
+    $(".announcementbtn").on("click",()=>{
+         window.location.href="/announcement"
+    })
+    $(".noticebtn").on("click",()=>{
+         window.location.href="/notice"
+    })
+    $(".weeknoticebtn").on("click",()=>{
+         window.location.href="/weeknotice"
+    })
+    $(".montynoticebtn").on("click",()=>{
+         window.location.href="/monthnotice"
+    })
+})

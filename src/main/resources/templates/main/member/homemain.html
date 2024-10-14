@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+
+
+<body>
+    <div th:fragment="homemain">
+        <div class="row g-4">
+            <!-- 오늘 인기글, 주간 인기글 -->
+            <div class="col-md-6">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">오늘 인기글</h5>
+                        <a href="#" class="stretched-link text-decoration-none text-end d-block">더보기</a>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">주간 인기글</h5>
+                        <a href="#" class="stretched-link text-decoration-none text-end d-block">더보기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mt-3">
+            <!-- 월간 인기글, 게시판 -->
+            <div class="col-md-6">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">월간 인기글</h5>
+                        <a href="#" class="stretched-link text-decoration-none text-end d-block">더보기</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">게시판</h5>
+                        <a href="#" class="stretched-link text-decoration-none text-end d-block">더보기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
