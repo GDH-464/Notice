@@ -216,6 +216,7 @@ public class NoticeController {
     public void commentadd(@RequestBody CommentGetDTO commentGetDTO)
     {
         log.error("CommentGetDTO : " + commentGetDTO.toString());
+        return;
 
     }
 
