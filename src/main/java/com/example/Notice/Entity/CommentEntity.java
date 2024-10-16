@@ -1,5 +1,6 @@
 package com.example.Notice.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,11 +15,11 @@ import java.sql.Date;
 @Entity
 public class CommentEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seq")
-    @SequenceGenerator(name="seq",sequenceName = "noticecomment_seq",allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "comment")
+    @SequenceGenerator(name="comment",sequenceName = "comment_sequence",allocationSize = 1)
     private Long idx;
     @ManyToOne
-    @JoinColumn(name = "noticeidx")
+    @JoinColumn(name = "noticeidx",referencedColumnName="idx")
     private NoticeEntity notice;
     private String userid;
     private String content;

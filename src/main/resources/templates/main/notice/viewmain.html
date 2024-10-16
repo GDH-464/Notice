@@ -16,7 +16,12 @@
     </tr>
     <tr>
       <th>작성자</th>
-      <td th:text="${notice.nick}"></td>
+      <td>
+        <img style="width:20px; height:20px;"
+                                        th:src="@{iconimg(idx=${notice.member.idx})}"
+                                        alt="사용자 아이콘">
+        <span th:text="${notice.nick}"></span>
+      </td>
     </tr>
     <tr>
       <th>내용</th>
@@ -51,8 +56,17 @@
     <input type="hidden" class="userid" th:value="${session.userid}">
     <input type="hidden" class="nick" th:value="${session.nick}">
     <input type="hidden" class="noticeidx" th:value="${notice.idx}">
-    <div class="comment">
-
+    <div class="comment" th:each="comment : ${comment}" th:id="${comment.idx}">
+      <img style="width:20px; height:20px;"
+           th:src="@{iconimg(idx=${comment.notice.member.idx})}"
+           alt="사용자 아이콘">
+      <span th:text="${comment.nick}"></span>
+      |
+      <span th:text="${comment.content}" ></span>
+      |
+      <span th:text="${comment.regdate}"></span>
+      <button class="commentdelete" th:if="${comment.userid == session.userid || session.grade == 1}" th:data-idx="${comment.idx}">삭제</button>
+      <button class="commentmodify" th:if="${comment.userid == session.userid}" th:data-idx="${comment.idx}" th:data-content="${comment.content}">수정</button>
     </div>
     <div th:if="${session.userid != null}">
       <input type="text" class="commentadd">

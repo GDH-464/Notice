@@ -1,5 +1,5 @@
  $(document).ready(() => {
-     Kakao.init('782cc63db29c873ba853549ad1e08aa8');
+     Kakao.init('700276f2395c015b65b2f3a862959e0f');
 
      //돌아가기
      $(".returnbtn").on("click",()=>{
@@ -7,9 +7,9 @@
          })
 
      // 주소 검색 기능
-     $(".searchAddress").on("click", function() {
+     $(".searchAddress").on("click", () =>{
          new daum.Postcode({
-             oncomplete: function(data) {
+             oncomplete: (data) => {
                  $("#postnumber").val(data.zonecode);
                  $("#street").val(data.address);
              }
@@ -46,7 +46,7 @@
              data: JSON.stringify(data),
              dataType: 'json',
              success: successCallback,
-             error: errorCallback || function(err) {
+             error: errorCallback || (err) => {
                  alert('error');
              }
          });

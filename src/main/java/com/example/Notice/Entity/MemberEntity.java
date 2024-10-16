@@ -1,5 +1,6 @@
 package com.example.Notice.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,7 @@ public class MemberEntity {
     private String userid;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)  // 비주인 엔티티
+    @JsonIgnore
     private List<NoticeEntity> noticeEntityList = new ArrayList<>();
 
     private String pwd;

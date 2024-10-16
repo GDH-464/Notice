@@ -3,6 +3,7 @@ package com.example.Notice.Controller;
 import com.example.Notice.Dto.CommentDTO;
 import com.example.Notice.Dto.CommentGetDTO;
 import com.example.Notice.Dto.NoticeDTO;
+import com.example.Notice.Entity.CommentEntity;
 import com.example.Notice.Entity.FileEntity;
 import com.example.Notice.Entity.NoticeEntity;
 import com.example.Notice.Repository.FileRepository;
@@ -195,7 +196,9 @@ public class NoticeController {
         }
         NoticeEntity notice =noticeService.view(idx,userid,request,response);
         List<FileEntity> file = noticeService.viewfile(notice);
+        List<CommentEntity> comment = noticeService.commentview(notice);
 
+        model.addAttribute("comment",comment);
         model.addAttribute("notice",notice);
         model.addAttribute("file",file);
         model.addAttribute("session",request);
@@ -213,10 +216,9 @@ public class NoticeController {
     }
 
     @PostMapping("/commentadd")
-    public void commentadd(@RequestBody CommentGetDTO commentGetDTO)
+    public ResponseEntity<Map<String, String>> commentadd(@RequestBody CommentGetDTO commentGetDTO)
     {
-        log.error("CommentGetDTO : " + commentGetDTO.toString());
-
+        return ResponseEntity.ok(noticeService.commentadd(commentGetDTO));
     }
 
     @GetMapping("/noticemodify")

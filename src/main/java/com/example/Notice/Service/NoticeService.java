@@ -49,4 +49,6 @@ public interface NoticeService {
     ResponseEntity<Resource> download(String idx) throws IOException;
 
     Map<String, String> commentadd(CommentGetDTO commentGetDTO);
+
+    List<CommentEntity> commentview(NoticeEntity notice);
 }

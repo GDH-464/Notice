@@ -24,6 +24,10 @@ public class CommentDTO {
 
     public CommentEntity tocommententity()
     {
+        return new CommentEntity(null,notice,userid,content,regdate,isdelete,nick);
+    }
+    public CommentEntity modifycommententity()
+    {
         return new CommentEntity(idx,notice,userid,content,regdate,isdelete,nick);
     }
 }

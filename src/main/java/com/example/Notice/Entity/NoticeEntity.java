@@ -1,5 +1,6 @@
 package com.example.Notice.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -21,12 +22,15 @@ public class NoticeEntity {
     @SequenceGenerator(name="noticeseq",sequenceName = "notice_seq",allocationSize = 1)
     private Long idx;
     @OneToMany(mappedBy = "notice",cascade = CascadeType.ALL)
+    @JsonIgnore
     List<FileEntity> fileEntityList = new ArrayList<>();
     @OneToMany(mappedBy = "notice",cascade = CascadeType.ALL)
+    @JsonIgnore
     List<CommentEntity> commentEntityList = new ArrayList<>();
 
-    @ManyToOne  // NoticeEntity가 주인
-    @JoinColumn(name = "userid",referencedColumnName = "userid")  // 외래 키 설정 (member의 기본 키를 참조)
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "userid",referencedColumnName = "userid")
     private MemberEntity member;
 
     private String title;

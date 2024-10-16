@@ -295,9 +295,21 @@ public class NoticeServiceimpl implements NoticeService {
         commentDTO.setUserid(commentGetDTO.getUserid());
         commentDTO.setNick(commentGetDTO.getNick());
         commentDTO.setContent(commentGetDTO.getComment());
-        commentDTO.setNotice(noticeRepository.findByIdx(Long.valueOf(commentGetDTO.getNoticeidx())).orElse(null));
+        NoticeEntity notice = noticeRepository.findByIdx(Long.valueOf(commentGetDTO.getNoticeidx()))
+                .orElseThrow(() -> new IllegalArgumentException("Invalid notice ID: " + commentGetDTO.getNoticeidx()));
+
+        commentDTO.setNotice(notice);
+        log.error(notice.getIdx().toString());
         commentRepository.save(commentDTO.tocommententity());
+        log.error("성공");
         Map<String, String> result = new HashMap<>();
+        result.put("result","S");
         return result;
+    }
+    @Override
+    public List<CommentEntity> commentview(NoticeEntity notice)
+    {
+        String icon = notice.getMember().getIcon();
+        return commentRepository.findByNotice(notice);
     }
 }
