@@ -22,8 +22,7 @@ public class MemberEntity {
     private Long idx;
     private String userid;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)  // 비주인 엔티티
-    @JsonIgnore
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<NoticeEntity> noticeEntityList = new ArrayList<>();
 
     private String pwd;

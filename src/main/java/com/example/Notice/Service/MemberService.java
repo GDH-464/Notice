@@ -41,5 +41,5 @@ public interface MemberService {
 
     void delete(String userid);
 
-    ResponseEntity<Resource> icon(Long idx) throws IOException;
+    ResponseEntity<Resource> icon(String userid) throws IOException;
 }

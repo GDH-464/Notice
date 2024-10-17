@@ -38,7 +38,12 @@
               <td><strong>[공지]</strong></td>
               <td><a th:href="@{/noticeview(idx=${announcement.idx})}" class="text-decoration-none">
                 <span th:text="${announcement.title}"></span></a></td>
-              <td><strong th:text="${announcement.member.nick}"></strong></td>
+              <td>
+                <img style="width:20px; height:20px;"
+                     th:src="@{iconimg(userid=${announcement.member.userid})}"
+                     alt="사용자 아이콘">
+                <strong th:text="${announcement.member.nick}">
+                </strong></td>
               <td><strong th:text="${announcement.hit}"></strong></td>
               <td><strong th:text="${announcement.regdate}"></strong></td>
             </tr>
@@ -46,7 +51,12 @@
               <td th:text="${notice.idx}"></td>
               <td><a th:href="@{/noticeview(idx=${notice.idx},userid=${session.userid != null ? session.userid : ''})}" class="text-decoration-none">
                 <span th:text="${notice.title}"></span></a></td>
-              <td th:text="${notice.nick}"></td>
+              <td>
+                <img style="width:20px; height:20px;"
+                                                th:src="@{iconimg(userid=${notice.member.userid})}"
+                                                alt="사용자 아이콘">
+                <span th:text="${notice.nick}"></span>
+              </td>
               <td th:text="${notice.hit}" ></td>
               <td th:text="${notice.regdate}"></td>
             </tr>

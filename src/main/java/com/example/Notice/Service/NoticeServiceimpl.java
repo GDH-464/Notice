@@ -1,9 +1,6 @@
 package com.example.Notice.Service;
 
-import com.example.Notice.Dto.CommentDTO;
-import com.example.Notice.Dto.CommentGetDTO;
-import com.example.Notice.Dto.FileDTO;
-import com.example.Notice.Dto.NoticeDTO;
+import com.example.Notice.Dto.*;
 import com.example.Notice.Entity.*;
 import com.example.Notice.Repository.CommentRepository;
 import com.example.Notice.Repository.FileRepository;
@@ -299,17 +296,30 @@ public class NoticeServiceimpl implements NoticeService {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid notice ID: " + commentGetDTO.getNoticeidx()));
 
         commentDTO.setNotice(notice);
-        log.error(notice.getIdx().toString());
-        commentRepository.save(commentDTO.tocommententity());
-        log.error("성공");
+        CommentEntity commentEntity = commentRepository.save(commentDTO.tocommententity());;
         Map<String, String> result = new HashMap<>();
-        result.put("result","S");
+        result.put("userid", commentEntity.getUserid());
+        result.put("commentidx", String.valueOf(commentEntity.getIdx()));
+        result.put("useridx", String.valueOf(notice.getMember().getIdx()));
+        result.put("regdate", String.valueOf(commentEntity.getRegdate()));
         return result;
     }
     @Override
     public List<CommentEntity> commentview(NoticeEntity notice)
     {
-        String icon = notice.getMember().getIcon();
         return commentRepository.findByNotice(notice);
     }
+    @Override
+    public Map<String, String> commentreturn(CommentreturnDTO commentreturnDTO)
+    {
+        CommentEntity commentEntity = commentRepository.findByIdx(commentreturnDTO.getIdx()).get();
+        Map<String, String> result = new HashMap<>();
+        result.put("userid", commentEntity.getUserid());
+        result.put("commentidx", String.valueOf(commentEntity.getIdx()));
+        result.put("nick", commentEntity.getNick());
+        result.put("comment",commentEntity.getContent());
+        result.put("regdate", String.valueOf(commentEntity.getRegdate()));
+        return result;
+    }
+
 }

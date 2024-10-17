@@ -158,12 +158,12 @@ public class MemberController {
         return "redirect:/";
     }
     @GetMapping("/iconimg")
-    public ResponseEntity<Resource> icon(@RequestParam(value = "idx") Long idx) {
+    public ResponseEntity<Resource> icon(@RequestParam(value = "userid") String userid) {
         try {
-            ResponseEntity<Resource> response = memberService.icon(idx);
+            ResponseEntity<Resource> response = memberService.icon(userid);
             return response;
         } catch (IOException e) {
-            log.error("Error retrieving icon for user ID: {}. Exception: {}", idx, e.getMessage());
+            log.error("Error retrieving icon for user ID: {}. Exception: {}", userid, e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }

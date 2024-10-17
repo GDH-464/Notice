@@ -1,7 +1,9 @@
 package com.example.Notice.Entity;
 
+import com.example.Notice.Repository.MemberRepository;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -11,7 +13,7 @@ import java.sql.Date;
 @ToString
 @Getter
 @Table(name="noticecomment")
-@NoArgsConstructor
+@NoArgsConstructor(force = true)
 @Entity
 public class CommentEntity {
     @Id

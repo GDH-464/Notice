@@ -274,9 +274,9 @@ public class MemberServiceImpl implements MemberService{
         memberRepository.deleteByUserid(userid);
     }
     @Override
-    public ResponseEntity<Resource> icon(Long idx) throws IOException {
+    public ResponseEntity<Resource> icon(String userid) throws IOException {
         try {
-            MemberEntity member = memberRepository.findByIdx(idx).get();
+            MemberEntity member = memberRepository.findByUserid(userid).get();
             String iconimg = member.getIcon()==null ? "아이콘X.jpg":member.getIcon();
             Path filePath = Paths.get("D:\\data\\icon\\"+iconimg);
             Resource resource = new UrlResource(filePath.toUri());

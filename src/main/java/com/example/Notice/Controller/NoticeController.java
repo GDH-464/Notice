@@ -2,6 +2,7 @@ package com.example.Notice.Controller;
 
 import com.example.Notice.Dto.CommentDTO;
 import com.example.Notice.Dto.CommentGetDTO;
+import com.example.Notice.Dto.CommentreturnDTO;
 import com.example.Notice.Dto.NoticeDTO;
 import com.example.Notice.Entity.CommentEntity;
 import com.example.Notice.Entity.FileEntity;
@@ -219,6 +220,12 @@ public class NoticeController {
     public ResponseEntity<Map<String, String>> commentadd(@RequestBody CommentGetDTO commentGetDTO)
     {
         return ResponseEntity.ok(noticeService.commentadd(commentGetDTO));
+    }
+    @PostMapping("/commentreturn")
+    public ResponseEntity<Map<String, String>> commentreturn(@RequestBody CommentreturnDTO commentreturnDTO)
+    {
+        log.error(commentreturnDTO);
+        return ResponseEntity.ok(noticeService.commentreturn(commentreturnDTO));
     }
 
     @GetMapping("/noticemodify")

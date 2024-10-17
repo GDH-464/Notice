@@ -22,10 +22,8 @@ public class NoticeEntity {
     @SequenceGenerator(name="noticeseq",sequenceName = "notice_seq",allocationSize = 1)
     private Long idx;
     @OneToMany(mappedBy = "notice",cascade = CascadeType.ALL)
-    @JsonIgnore
     List<FileEntity> fileEntityList = new ArrayList<>();
     @OneToMany(mappedBy = "notice",cascade = CascadeType.ALL)
-    @JsonIgnore
     List<CommentEntity> commentEntityList = new ArrayList<>();
 
     @ManyToOne

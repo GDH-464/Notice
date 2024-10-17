@@ -1,6 +1,7 @@
 package com.example.Notice.Service;
 
 import com.example.Notice.Dto.CommentGetDTO;
+import com.example.Notice.Dto.CommentreturnDTO;
 import com.example.Notice.Dto.NoticeDTO;
 import com.example.Notice.Entity.CommentEntity;
 import com.example.Notice.Entity.FileEntity;
@@ -51,4 +52,7 @@ public interface NoticeService {
     Map<String, String> commentadd(CommentGetDTO commentGetDTO);
 
     List<CommentEntity> commentview(NoticeEntity notice);
+
+    Map<String, String> commentreturn(CommentreturnDTO commentreturnDTO);
+
 }

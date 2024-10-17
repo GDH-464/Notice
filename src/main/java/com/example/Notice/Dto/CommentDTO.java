@@ -1,7 +1,9 @@
 package com.example.Notice.Dto;
 
 import com.example.Notice.Entity.CommentEntity;
+import com.example.Notice.Entity.MemberEntity;
 import com.example.Notice.Entity.NoticeEntity;
+import com.example.Notice.Repository.MemberRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +16,7 @@ import java.sql.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CommentDTO {
+
     private Long idx;
     private NoticeEntity notice;
     private String userid;
@@ -21,6 +24,7 @@ public class CommentDTO {
     private Date regdate = new Date(System.currentTimeMillis());
     private String isdelete = "false";
     private String nick;
+
 
     public CommentEntity tocommententity()
     {
