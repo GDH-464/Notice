@@ -40,6 +40,7 @@ public class NoticeServiceimpl implements NoticeService {
     private final NoticeRepository noticeRepository;
     private final FileRepository fileRepository;
     private final CommentRepository commentRepository;
+
     @Override
     public NoticeEntity write_proc(NoticeDTO notice)
     {
@@ -321,5 +322,26 @@ public class NoticeServiceimpl implements NoticeService {
         result.put("regdate", String.valueOf(commentEntity.getRegdate()));
         return result;
     }
-
+    @Override
+    public Map<String,String> commentmodify(CommentmodifyDTO commentmodifyDTO)
+    {
+        CommentEntity commentEntity = commentRepository.findByIdx(commentmodifyDTO.getIdx()).get();
+        CommentDTO commentDTO = new CommentDTO(commentEntity);
+        commentDTO.setContent(commentmodifyDTO.getContent());
+        commentEntity = commentRepository.save(commentDTO.modifycommententity());
+        Map<String, String> result = new HashMap<>();
+        result.put("userid", commentEntity.getUserid());
+        result.put("commentidx", String.valueOf(commentEntity.getIdx()));
+        result.put("nick", commentEntity.getNick());
+        result.put("comment",commentEntity.getContent());
+        result.put("regdate", String.valueOf(commentEntity.getRegdate()));
+        return result;
+    }
+    @Override
+    public void commentdelete(CommentreturnDTO commentretrurnDTO)
+    {
+        CommentDTO commentDTO = new CommentDTO(commentRepository.findByIdx(commentretrurnDTO.getIdx()).get());
+        commentDTO.setIsdelete("true");
+        commentRepository.save(commentDTO.modifycommententity());
+    }
 }

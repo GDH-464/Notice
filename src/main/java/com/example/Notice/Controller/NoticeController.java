@@ -1,9 +1,6 @@
 package com.example.Notice.Controller;
 
-import com.example.Notice.Dto.CommentDTO;
-import com.example.Notice.Dto.CommentGetDTO;
-import com.example.Notice.Dto.CommentreturnDTO;
-import com.example.Notice.Dto.NoticeDTO;
+import com.example.Notice.Dto.*;
 import com.example.Notice.Entity.CommentEntity;
 import com.example.Notice.Entity.FileEntity;
 import com.example.Notice.Entity.NoticeEntity;
@@ -224,8 +221,19 @@ public class NoticeController {
     @PostMapping("/commentreturn")
     public ResponseEntity<Map<String, String>> commentreturn(@RequestBody CommentreturnDTO commentreturnDTO)
     {
-        log.error(commentreturnDTO);
         return ResponseEntity.ok(noticeService.commentreturn(commentreturnDTO));
+    }
+    @PostMapping("/commentmodify")
+    public ResponseEntity<Map<String,String>> commentmodifytrue(@RequestBody CommentmodifyDTO commentmodifyDTO)
+    {
+        log.error(commentmodifyDTO);
+        return ResponseEntity.ok(noticeService.commentmodify(commentmodifyDTO));
+    }
+    @PostMapping("/commentdelete")
+    public ResponseEntity<String> commentdelete(@RequestBody CommentreturnDTO commentreturnDTO)
+    {
+        noticeService.commentdelete(commentreturnDTO);
+        return ResponseEntity.ok("처리 완료");
     }
 
     @GetMapping("/noticemodify")

@@ -21,13 +21,25 @@ public class CommentDTO {
     private NoticeEntity notice;
     private String userid;
     private String content;
-    private Date regdate = new Date(System.currentTimeMillis());
-    private String isdelete = "false";
+    private Date regdate;
+    private String isdelete;
     private String nick;
 
 
+    public CommentDTO(CommentEntity comment) {
+        this.idx = comment.getIdx();
+        this.notice = comment.getNotice();
+        this.userid = comment.getUserid();
+        this.content = comment.getContent();
+        this.regdate = comment.getRegdate();
+        this.isdelete = comment.getIsdelete();
+        this.nick = comment.getNick();
+    }
+
     public CommentEntity tocommententity()
     {
+        regdate = new Date(System.currentTimeMillis());
+        isdelete = "false";
         return new CommentEntity(null,notice,userid,content,regdate,isdelete,nick);
     }
     public CommentEntity modifycommententity()
