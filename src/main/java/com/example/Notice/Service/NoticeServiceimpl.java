@@ -240,7 +240,7 @@ public class NoticeServiceimpl implements NoticeService {
         noticeDTO.setHit(hit);
         noticeRepository.save(noticeDTO.tonoticeentity());
 
-        Cookie sessionCookie = new Cookie("sessionidx", String.valueOf(idx));
+        Cookie sessionCookie =  new Cookie("sessionidx", String.valueOf(idx));
         sessionCookie.setPath("/");
         sessionCookie.setMaxAge(60 * 60 * 24);
         response.addCookie(sessionCookie);
@@ -343,5 +343,10 @@ public class NoticeServiceimpl implements NoticeService {
         CommentDTO commentDTO = new CommentDTO(commentRepository.findByIdx(commentretrurnDTO.getIdx()).get());
         commentDTO.setIsdelete("true");
         commentRepository.save(commentDTO.modifycommententity());
+    }
+    @Override
+    public NoticeEntity modify(Long idx)
+    {
+        return noticeRepository.findByIdx(idx).get();
     }
 }

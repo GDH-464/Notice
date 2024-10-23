@@ -59,4 +59,6 @@ public interface NoticeService {
     Map<String,String> commentmodify(CommentmodifyDTO commentmodifyDTO);
 
     void commentdelete(CommentreturnDTO commentretrurnDTO);
+
+    NoticeEntity modify(Long idx);
 }

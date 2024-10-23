@@ -1,12 +1,12 @@
 package com.example.Notice.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@ToString
 @Getter
 @Table(name="noticefile")
 @NoArgsConstructor
@@ -17,7 +17,7 @@ public class FileEntity {
     @SequenceGenerator(name="fileseq",sequenceName = "noticefile_seq",allocationSize = 1)
     private Long idx;
     @ManyToOne
-    @JsonIgnore
+    @JsonBackReference
     @JoinColumn(name = "noticeidx")
     private NoticeEntity notice;
 

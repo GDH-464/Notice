@@ -8,6 +8,8 @@ import com.example.Notice.Repository.FileRepository;
 import com.example.Notice.Repository.NoticeRepository;
 import com.example.Notice.Service.MemberService;
 import com.example.Notice.Service.NoticeService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
@@ -237,9 +239,32 @@ public class NoticeController {
     }
 
     @GetMapping("/noticemodify")
-    public String modify()
-    {
+    public String modify(@RequestParam(value = "idx") Long idx, Model model,HttpServletRequest request) throws JsonProcessingException {
+        NoticeEntity noticeEntity = noticeService.modify(idx);
+        if(memberService.setsesstion(request) != null)
+        {
+            if(noticeEntity.getMember().getUserid().equals(request.getSession().getAttribute("userid")))
+            {
+                model.addAttribute("equals",true);
+                model.addAttribute("session", memberService.setsesstion(request));
+            }
+            else
+            {
+                model.addAttribute("equals",false);
+            }
+        }
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String fileEntityListJson = objectMapper.writeValueAsString(noticeEntity.getFileEntityList());
+        log.error(fileEntityListJson);
+        model.addAttribute("file", fileEntityListJson);
+        model.addAttribute("notice",noticeEntity);
         return "notice/modify";
+    }
+    @PostMapping("/noticemodify_proc")
+    public ResponseEntity<String> handleFileUpload(@RequestParam("ofile") MultipartFile file) {
+        // 파일 처리 로직 추가
+        return ResponseEntity.ok("File uploaded successfully.");
     }
 
 }

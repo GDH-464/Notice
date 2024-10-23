@@ -1,6 +1,7 @@
 package com.example.Notice.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -11,7 +12,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-@ToString
+
 @Getter
 @Table(name="notice")
 @NoArgsConstructor
@@ -22,6 +23,7 @@ public class NoticeEntity {
     @SequenceGenerator(name="noticeseq",sequenceName = "notice_seq",allocationSize = 1)
     private Long idx;
     @OneToMany(mappedBy = "notice",cascade = CascadeType.ALL)
+    @JsonManagedReference
     List<FileEntity> fileEntityList = new ArrayList<>();
     @OneToMany(mappedBy = "notice",cascade = CascadeType.ALL)
     List<CommentEntity> commentEntityList = new ArrayList<>();
