@@ -228,7 +228,6 @@ public class NoticeController {
     @PostMapping("/commentmodify")
     public ResponseEntity<Map<String,String>> commentmodifytrue(@RequestBody CommentmodifyDTO commentmodifyDTO)
     {
-        log.error(commentmodifyDTO);
         return ResponseEntity.ok(noticeService.commentmodify(commentmodifyDTO));
     }
     @PostMapping("/commentdelete")
@@ -256,14 +255,20 @@ public class NoticeController {
 
         ObjectMapper objectMapper = new ObjectMapper();
         String fileEntityListJson = objectMapper.writeValueAsString(noticeEntity.getFileEntityList());
-        log.error(fileEntityListJson);
         model.addAttribute("file", fileEntityListJson);
         model.addAttribute("notice",noticeEntity);
         return "notice/modify";
     }
     @PostMapping("/noticemodify_proc")
-    public ResponseEntity<String> handleFileUpload(@RequestParam("ofile") MultipartFile file) {
-        // 파일 처리 로직 추가
+    public ResponseEntity<String> handleFileUpload(NoticeDTO notice, @RequestParam(value = "ofile", required = false) MultipartFile file,
+                                                   @RequestParam(value="removedFiles", required = false) List<String> removedFiles)
+    {
+        if(removedFiles !=null)
+        {
+            noticeService.deletefile(removedFiles);
+        }
+        log.error(removedFiles);
+        log.error(notice.toString());
         return ResponseEntity.ok("File uploaded successfully.");
     }
 

@@ -61,4 +61,6 @@ public interface NoticeService {
     void commentdelete(CommentreturnDTO commentretrurnDTO);
 
     NoticeEntity modify(Long idx);
+
+    void deletefile(List<String> removedFiles);
 }

@@ -12,6 +12,7 @@
         <div class="card-body">
           <h2 class="text-center mb-4">글 작성</h2>
           <form action="/noticemodify_proc" class="onsubmit" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="idx" th:value="${notice.idx}">
             <input type="hidden" name="userid" th:value="${session.userid}">
             <input type="hidden" name="nick" th:value="${session.nick}">
             <input type="hidden" name="grade" class="grade" value="2">

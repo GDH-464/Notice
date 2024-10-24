@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.ssl.SslProperties;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
@@ -24,6 +25,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -349,4 +351,16 @@ public class NoticeServiceimpl implements NoticeService {
     {
         return noticeRepository.findByIdx(idx).get();
     }
+    @Override
+    public void deletefile(List<String> removedFiles)
+    {
+        for(int i =0;i<removedFiles.size();i++)
+        {
+            File file = new File("D:\\data\\file\\"+removedFiles.get(i));
+            file.delete();
+            String sfile = removedFiles.get(i);
+            fileRepository.delete(fileRepository.findBySfile(sfile).get());
+        }
+    }
+
 }

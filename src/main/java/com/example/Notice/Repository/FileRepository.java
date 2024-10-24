@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface FileRepository extends JpaRepository<FileEntity,String> {
     Optional<FileEntity> findByIdx(Long idx);
     List<FileEntity> findByNotice(NoticeEntity notice);
+    Optional<FileEntity> findBySfile(String sfile);
 }

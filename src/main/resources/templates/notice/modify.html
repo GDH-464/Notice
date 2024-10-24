@@ -22,8 +22,6 @@
   <div th:include="main/notice/modifymain :: modifymain"></div>
 </main>
 <div th:replace="fragment/footer :: footer"></div>
-<div th:text = "${file}"></div>
-<script th:src="@{/js/notice/noticemodify.js}"></script>
 <script th:inline="javascript">
   Dropzone.autoDiscover = false;
   var myDropzone = new Dropzone("#fileDropzone", {
@@ -34,26 +32,115 @@
     paramName: "ofile", // 파일 이름 매핑
     maxFiles: 5, // 최대 파일 개수
     addRemoveLinks: true, // 파일 제거 링크 추가
-    dictFileTooBig: "파일 크기가 너무 큽니다. 최대 크기는 10MB입니다."
-});
+    dictFileTooBig: "파일 크기가 너무 큽니다. 최대 크기는 10MB입니다.",
+    init: function () {
+        this.on("addedfile", (file) => {
+            // mock file로 추가할 경우, isExisting 속성을 true로 설정
+            file.isExisting = true; // mock file로 설정
+            file.sfile = file.name; // sfile 속성에 파일 이름을 저장
+        });
+    }
+  });
 
 document.addEventListener("DOMContentLoaded", () => {
     // 파일 목록 가져오기
     var files = JSON.parse(/*[[${file}]]*/ '[]');
-    console.log("Rendered files:", files);
-
+    var existingFiles = [];
     // 파일 추가
     files.forEach(function(fileInfo) {
-        console.log("Original Filename: " + fileInfo.ofile);
-        console.log("Stored Filename: " + fileInfo.sfile);
-        let mockFile = { name: fileInfo.ofile, size: 12345 }; // 가상의 파일 객체 생성
-        myDropzone.emit("addedfile", mockFile); // Dropzone에 파일 추가
-        let filePath = `/uploads/${fileInfo.sfile}`;
-        myDropzone.emit("complete", mockFile); // 파일이 완전히 업로드된 상태로 표시
+        let mockFile = {
+        name: fileInfo.ofile,
+        size: fileInfo.size || 12345,
+        accepted: true, // 파일이 accepted 상태로 처리되도록 설정
+        status: Dropzone.SUCCESS, // Dropzone의 성공 상태로 설정
+        upload: { progress: 100, total: fileInfo.size || 12345, bytesSent: fileInfo.size || 12345 } // 업로드 완료 상태로 설정
+        };
+        myDropzone.emit("addedfile", mockFile);
+        myDropzone.emit("thumbnail", mockFile, `/uploads/${fileInfo.sfile}`);
+        myDropzone.emit("complete", mockFile);
+        myDropzone.emit("success", mockFile);
+        myDropzone.files.push(mockFile);
+        myDropzone.accept(mockFile, () => {});
+    });
+    var removedFiles = [];
+    myDropzone.on("removedfile",  (file) => {
+       if (file.isExisting) {
+        // files 배열에서 삭제된 파일의 sfile을 찾기
+        const fileInfo = files.find(f => f.ofile === file.name);
+        if (fileInfo) {
+            console.log(fileInfo.sfile); // 찾은 파일의 sfile 출력
+            removedFiles.push(fileInfo.sfile); // 삭제된 파일의 sfile을 배열에 저장
+        }
+    }
+    });
+
+    const validateForm = () => {
+        const checks = [
+            { check: $(".title").val(), message: "제목을 입력해주세요", field: ".title" },
+            { check: $(".content").val(), message: "내용을 입력해주세요", field: ".content" },
+        ];
+        for (const { check, message, field } of checks) {
+            if (check === undefined ||check.length === 0) {
+                alert(message);
+                $(field).focus();
+                return false;
+            }
+        }
+        return true;
+    };
+    $(".onsubmit").on("submit", (event) => {
+
+        event.preventDefault(); // 기본 제출 방지
+        if (validateForm()) {
+            const myDropzone = Dropzone.forElement("#fileDropzone");
+            const formData = new FormData();
+            existingFiles.forEach((existingFile) => {
+                 formData.append("existingFiles", existingFile);
+            });
+            formData.append("idx",$("input[name='idx']").val())
+            formData.append("userid", $("input[name='userid']").val());
+            formData.append("nick", $("input[name='nick']").val());
+            formData.append("grade", $("input[name='grade']").val());
+            formData.append("title", $(".title").val());
+            formData.append("content", $(".content").val());
+
+            if(removedFiles !=null)
+            {
+              removedFiles.forEach((sfile) => {
+              formData.append("removedFiles", sfile);
+              });
+            }
+
+            // Dropzone 파일 추가
+            console.log("Accepted Files:", myDropzone.getAcceptedFiles()); // 확인
+            myDropzone.getAcceptedFiles().forEach((file) => {
+                formData.append("ofile", file);
+            });
+
+            for (let [key, value] of formData.entries()) {
+                console.log(key, value);
+            }
+
+            // AJAX 요청
+            $.ajax({
+                url: '/noticemodify_proc',
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    // 성공 시 처리
+                    window.location.href = "/notice";
+                },
+                error: function (error) {
+                    // 오류 처리
+                }
+            });
+        }
     });
 });
+
 </script>
-
-
+<script th:src="@{/js/notice/noticemodify.js}"></script>
 </body>
 </html>
