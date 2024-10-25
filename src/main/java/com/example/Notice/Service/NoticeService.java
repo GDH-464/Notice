@@ -63,4 +63,11 @@ public interface NoticeService {
     NoticeEntity modify(Long idx);
 
     void deletefile(List<String> removedFiles);
+
+
+    void noticemodify(NoticeDTO noticeDTO);
+
+    void modifyfile(NoticeDTO notice, MultipartFile[] files);
+
+    void noticedelete(Long idx);
 }

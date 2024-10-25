@@ -4,6 +4,7 @@ import com.example.Notice.Dto.MemberDTO;
 import com.example.Notice.Entity.MemberEntity;
 import com.example.Notice.Repository.MemberRepository;
 import com.example.Notice.Service.MemberService;
+import com.example.Notice.Service.NoticeService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
@@ -37,6 +38,7 @@ import java.util.Map;
 public class MemberController {
     private final MemberRepository memberRepository;
     private final MemberService memberService;
+    private final NoticeService noticeService;
     @GetMapping
     public String home(Model model, HttpServletRequest request)
     {

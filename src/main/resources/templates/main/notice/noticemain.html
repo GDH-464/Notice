@@ -61,21 +61,20 @@
               <td th:text="${notice.regdate}"></td>
             </tr>
             <tr>
-              <td>
-                <button onclick="location.href='/noticewrite'" th:if="${session.grade !=null}" class="btn btn-success">글쓰기</button>
-
+              <td class = "d-flex">
+                <button onclick="location.href='/noticewrite'" th:if="${session.grade !=null}" class="btn btn-success me-2">글쓰기</button>
               </td>
               <td colspan="4">
                 <form th:each="form : ${actions}"
                       th:if="${form.type == type}"
                       th:action="${form.action}"
                       method="get"
-                      class="d-flex my-4">
-                  <select name="sear" class="form-select me-2">
+                      class="d-flex">
+                  <select name="sear" class="form-select me-2" style="width :200px;height : 40px">
                     <option value="title">제목</option>
                     <option value="userid">작성자</option>
                   </select>
-                  <input type="text" name="search" class="form-control me-2" placeholder="검색어 입력">
+                  <input type="text" name="search" class="form-control me-2" style = "width:300px;height:40px" placeholder="검색어 입력">
                   <button type="submit" class="btn btn-primary">검색</button>
                 </form>
               </td>

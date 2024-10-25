@@ -260,16 +260,25 @@ public class NoticeController {
         return "notice/modify";
     }
     @PostMapping("/noticemodify_proc")
-    public ResponseEntity<String> handleFileUpload(NoticeDTO notice, @RequestParam(value = "ofile", required = false) MultipartFile file,
+    public ResponseEntity<String> handleFileUpload(NoticeDTO notice, @RequestParam(value = "ofile", required = false) MultipartFile [] file,
                                                    @RequestParam(value="removedFiles", required = false) List<String> removedFiles)
     {
         if(removedFiles !=null)
         {
             noticeService.deletefile(removedFiles);
         }
-        log.error(removedFiles);
-        log.error(notice.toString());
+        noticeService.noticemodify(notice);
+        if(file !=null)
+        {
+            noticeService.modifyfile(notice,file);
+        }
         return ResponseEntity.ok("File uploaded successfully.");
+    }
+    @GetMapping("/noticedelete")
+    public String noticedelete(@RequestParam(value = "idx")Long idx)
+    {
+     noticeService.noticedelete(idx);
+     return "redirect:/notice";
     }
 
 }

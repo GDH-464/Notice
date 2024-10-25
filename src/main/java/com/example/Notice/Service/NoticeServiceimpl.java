@@ -12,7 +12,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.ssl.SslProperties;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
@@ -81,7 +80,6 @@ public class NoticeServiceimpl implements NoticeService {
             FileDTO fileDto = new FileDTO();
             fileDto.setNoticeidx(notice); // NoticeEntity 설정
             fileDto.setUserid(notice.getMember().getUserid()); // 현재 로그인된 사용자 ID 설정 (예시)
-            fileDto.setSfile(file.getOriginalFilename()); // 서버에 저장될 파일명 설정
             fileDto.setOfile(file.getOriginalFilename()); // 원래 파일명 설정
             fileDto.setNick(notice.getMember().getNick()); // 사용자 닉네임 설정 (예시)
 
@@ -362,5 +360,65 @@ public class NoticeServiceimpl implements NoticeService {
             fileRepository.delete(fileRepository.findBySfile(sfile).get());
         }
     }
+    @Override
+    public void noticemodify(NoticeDTO noticeDTO)
+    {
+        MemberEntity member = memberRepository.findByUserid(noticeDTO.getUserid()).get();
+        noticeDTO.setMember(member);
+        noticeRepository.save(noticeDTO.tonoticeentity());
+    }
+    @Override
+    public void modifyfile(NoticeDTO notice, MultipartFile[] files)
+    {
+        if (files == null || files.length == 0) {
+            return;
+        }
+        MemberEntity member = memberRepository.findByUserid(notice.getUserid()).get();
+        notice.setMember(member);
+        List<NoticeEntity> noticeEntities = noticeRepository.findByMember(member);
+        if (noticeEntities.isEmpty()) {
+            throw new RuntimeException("No notice found for the member");
+        }
+        String dir = "D:\\data\\file";
+        Path upPath = Paths.get(dir);
 
+        for (MultipartFile file : files) {
+            if (file == null || file.isEmpty() || file.getOriginalFilename() == null || file.getOriginalFilename().isEmpty()) {
+                continue;
+            }
+
+            FileDTO fileDto = new FileDTO();
+            fileDto.setNoticeidx(notice.tonoticeentity()); // NoticeEntity 설정
+            fileDto.setUserid(notice.getMember().getUserid()); // 현재 로그인된 사용자 ID 설정 (예시)
+            fileDto.setOfile(file.getOriginalFilename()); // 원래 파일명 설정
+            fileDto.setNick(notice.getMember().getNick()); // 사용자 닉네임 설정 (예시)
+
+            FileEntity fileEntity = fileDto.tofileentity();
+
+            fileRepository.save(fileEntity);
+
+            try {
+                // 실제 파일 저장 로직 (서버에 파일 저장)
+                Path targetLocation = upPath.resolve(fileEntity.getSfile());  // 저장할 파일 경로
+                Files.copy(file.getInputStream(), targetLocation);
+
+                // 파일 정보 저장 (필요 시 DB에 fileEntity 저장 로직 추가)
+            } catch (IOException e) {
+                throw new RuntimeException("파일 저장 중 오류가 발생했습니다.", e);
+            }
+        }
+    }
+    @Override
+    public void noticedelete(Long idx)
+    {
+        NoticeEntity notice = noticeRepository.findByIdx(idx).get();
+        List<FileEntity> fileEntities = fileRepository.findByNotice(notice);
+        for(int i=0;i<fileEntities.size();i++)
+        {
+            File file = new File("D:\\data\\file\\"+fileEntities.get(i).getSfile());
+            log.error(file.toString());
+            file.delete();
+        }
+        noticeRepository.delete(notice);
+    }
 }
