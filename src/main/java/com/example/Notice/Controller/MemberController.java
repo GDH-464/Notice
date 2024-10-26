@@ -19,6 +19,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelExtensionsKt;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -46,7 +47,14 @@ public class MemberController {
         {
             model.addAttribute("session",memberService.setsesstion(request));
         }
-
+        Page announcement = noticeService.announcement2();
+        Page weeklist = noticeService.weeklist(0,"","");
+        Page monthlist = noticeService.monthlist(0,"","");
+        Page list = noticeService.list(0,"","");
+        model.addAttribute("weeklist",weeklist);
+        model.addAttribute("monthlist",monthlist);
+        model.addAttribute("list",list);
+        model.addAttribute("announcement",announcement);
         return "member/home";
     }
 

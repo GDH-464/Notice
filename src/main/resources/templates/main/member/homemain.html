@@ -10,33 +10,71 @@
 <body>
     <div th:fragment="homemain">
         <div class="row g-4">
-            <!-- 오늘 인기글, 주간 인기글 -->
             <div class="col-md-6">
                 <div class="card shadow-sm h-100">
                     <div class="card-body">
-                        <h5 class="card-title">오늘 인기글</h5>
-                        <a href="#" class="stretched-link text-decoration-none text-end d-block">더보기</a>
+                        <h5 class="card-title">공지 사항</h5>
+                        <table style="width:500px">
+                            <tr th:each="announcement :${announcement}">
+                                <td><a th:href="@{/noticeview(idx=${announcement.idx})}" class="text-decoration-none" style="width:70%">
+                                    <span th:text="${announcement.title}"></span></a></td>
+                                <td>
+                                    <img style="width:20px; height:20px;"
+                                         th:src="@{iconimg(userid=${announcement.member.userid})}"
+                                         alt="사용자 아이콘">
+                                    <strong th:text="${announcement.member.nick}">
+                                    </strong></td>
 
+                                <td><strong th:text="${announcement.regdate}"></strong></td>
+                            </tr>
+                        </table>
+                        <a href="announcement" class="stretched-link text-decoration-none text-end d-block">더보기</a>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="card shadow-sm h-100">
                     <div class="card-body">
-                        <h5 class="card-title">주간 인기글</h5>
-                        <a href="#" class="stretched-link text-decoration-none text-end d-block">더보기</a>
+                        <h5 class="card-title">주간 게시판</h5>
+                        <table style="width:500px">
+                            <tr th:each="weeklist :${weeklist}">
+                                <td><a th:href="@{/noticeview(idx=${weeklist.idx})}" class="text-decoration-none" style="width:70%">
+                                    <span th:text="${weeklist.title}"></span></a></td>
+                                <td>
+                                    <img style="width:20px; height:20px;"
+                                         th:src="@{iconimg(userid=${weeklist.member.userid})}"
+                                         alt="사용자 아이콘">
+                                    <span th:text="${weeklist.member.nick}">
+                                    </span></td>
+
+                                <td><span th:text="${weeklist.regdate}"></span></td>
+                            </tr>
+                        </table>
+                        <a href="weeknotice" class="stretched-link text-decoration-none text-end d-block">더보기</a>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="row g-4 mt-3">
-            <!-- 월간 인기글, 게시판 -->
             <div class="col-md-6">
                 <div class="card shadow-sm h-100">
                     <div class="card-body">
-                        <h5 class="card-title">월간 인기글</h5>
-                        <a href="#" class="stretched-link text-decoration-none text-end d-block">더보기</a>
+                        <h5 class="card-title">월간 게시판</h5>
+                        <table style="width:500px">
+                            <tr th:each="monthlist :${monthlist}">
+                                <td><a th:href="@{/noticeview(idx=${monthlist.idx})}" class="text-decoration-none" style="width:70%">
+                                    <span th:text="${monthlist.title}"></span></a></td>
+                                <td>
+                                    <img style="width:20px; height:20px;"
+                                         th:src="@{iconimg(userid=${monthlist.member.userid})}"
+                                         alt="사용자 아이콘">
+                                    <span th:text="${monthlist.member.nick}">
+                                    </span></td>
+                                <td><span th:text="${monthlist.regdate}"></span></td>
+                            </tr>
+                        </table>
+                        <a href="/monthnotice" class="stretched-link text-decoration-none text-end d-block">더보기</a>
                     </div>
                 </div>
             </div>
@@ -44,7 +82,20 @@
                 <div class="card shadow-sm h-100">
                     <div class="card-body">
                         <h5 class="card-title">게시판</h5>
-                        <a href="#" class="stretched-link text-decoration-none text-end d-block">더보기</a>
+                        <table style="width:500px">
+                            <tr th:each="list :${list}">
+                                <td><a th:href="@{/noticeview(idx=${list.idx})}" class="text-decoration-none" style="width:70%">
+                                    <span th:text="${list.title}"></span></a></td>
+                                <td>
+                                    <img style="width:20px; height:20px;"
+                                         th:src="@{iconimg(userid=${list.member.userid})}"
+                                         alt="사용자 아이콘">
+                                    <span th:text="${list.member.nick}">
+                                    </span></td>
+                                <td><span th:text="${list.regdate}"></span></td>
+                            </tr>
+                        </table>
+                        <a href="/notice" class="stretched-link text-decoration-none text-end d-block">더보기</a>
                     </div>
                 </div>
             </div>

@@ -36,6 +36,8 @@ public interface NoticeService {
 
     Page announcement1();
 
+    Page announcement2();
+
     Page list1(int page, String search, String sear);
 
     Page weeklist(int page, String search, String sear);

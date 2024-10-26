@@ -18,10 +18,9 @@
           </div>
           <div class="mb-3">
             <h5>작성자
-
               <img class="rounded-circle" style="width:20px; height:20px;"
                    th:src="@{iconimg(userid=${notice.member.userid})}" alt="사용자 아이콘">
-              <span th:text="${notice.member.userid}"></span>
+              <span th:text="${notice.member.nick}"></span>
             </h5>
           </div>
           <div class="mb-3">
@@ -63,12 +62,12 @@
                 <div class="d-flex align-items-center">
                   <img class="rounded-circle me-2" style="width:20px; height:20px;"
                        th:src="@{iconimg(userid=${comment.userid})}" alt="사용자 아이콘">
-                  <span th:text="${comment.userid}" class="fw-bold me-2"></span> <!-- 수정된 부분 -->
+                  <span th:text="${comment.nick}" class="fw-bold me-2"></span> <!-- 수정된 부분 -->
                   <span th:text="${comment.regdate}" class="text-muted me-2"></span> <!-- 수정된 부분 -->
                   <span th:text="${comment.content}"></span>
-                </div>
-                <div class="ms-4">
+                  &nbsp;
                   <button class="btn btn-outline-secondary btn-sm commentmodify" th:if="${comment.userid == session.userid}" th:data-idx="${comment.idx}" th:data-content="${comment.content}">수정</button>
+                  &nbsp;
                   <button class="btn btn-outline-danger btn-sm commentdelete" th:if="${comment.userid == session.userid || session.grade == 1}" th:data-idx="${comment.idx}">삭제</button>
                 </div>
               </div>
@@ -76,6 +75,9 @@
           </div>
           <div th:if="${session.userid != null}">
             <div class="input-group mt-3">
+              <input type="hidden" class="noticeidx" th:value="${notice.idx}">
+              <input type="hidden" class="userid" th:value="${session.userid}">
+              <input type="hidden" class="nick" th:value="${session.nick}">
               <input type="text" class="form-control commentadd" placeholder="댓글을 입력하세요">
               <button type="button" class="btn btn-primary commentaddbtn">등록</button>
             </div>

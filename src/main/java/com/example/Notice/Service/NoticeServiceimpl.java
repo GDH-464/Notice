@@ -153,6 +153,15 @@ public class NoticeServiceimpl implements NoticeService {
         return announcement;
     }
     @Override
+    public Page announcement2()
+    {
+        Sort sort = Sort.by(Sort.Direction.DESC, "idx");
+        Pageable pageable = PageRequest.of(0, 8, sort);
+        Page<NoticeEntity> announcement = noticeRepository.findByGrade(1L,pageable);
+
+        return announcement;
+    }
+    @Override
     public Page list1(int page, String search, String sear)
     {
         Sort sort = Sort.by(Sort.Direction.DESC, "idx");
@@ -293,6 +302,7 @@ public class NoticeServiceimpl implements NoticeService {
         commentDTO.setUserid(commentGetDTO.getUserid());
         commentDTO.setNick(commentGetDTO.getNick());
         commentDTO.setContent(commentGetDTO.getComment());
+        log.error(commentGetDTO.getNoticeidx());
         NoticeEntity notice = noticeRepository.findByIdx(Long.valueOf(commentGetDTO.getNoticeidx()))
                 .orElseThrow(() -> new IllegalArgumentException("Invalid notice ID: " + commentGetDTO.getNoticeidx()));
 
@@ -416,7 +426,6 @@ public class NoticeServiceimpl implements NoticeService {
         for(int i=0;i<fileEntities.size();i++)
         {
             File file = new File("D:\\data\\file\\"+fileEntities.get(i).getSfile());
-            log.error(file.toString());
             file.delete();
         }
         noticeRepository.delete(notice);

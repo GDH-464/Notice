@@ -61,9 +61,6 @@
               <td th:text="${notice.regdate}"></td>
             </tr>
             <tr>
-              <td class = "d-flex">
-                <button onclick="location.href='/noticewrite'" th:if="${session.grade !=null}" class="btn btn-success me-2">글쓰기</button>
-              </td>
               <td colspan="4">
                 <form th:each="form : ${actions}"
                       th:if="${form.type == type}"
@@ -77,6 +74,9 @@
                   <input type="text" name="search" class="form-control me-2" style = "width:300px;height:40px" placeholder="검색어 입력">
                   <button type="submit" class="btn btn-primary">검색</button>
                 </form>
+              </td>
+              <td>
+                <button onclick="location.href='/noticewrite'" th:if="${session.grade !=null}" class="btn btn-success me-2">글쓰기</button>
               </td>
             </tr>
             </tbody>
