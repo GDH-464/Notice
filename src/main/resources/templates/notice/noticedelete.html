@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script th:inline="javascript">
+    const userid = /*[[${session.userid}]]*/ '';
+    const userid1 = /*[[${userid}]]*/ '';
+    const idx = /*[[${idx}]]*/ '';
+    if(userid != userid1)
+    {
+      alert("권한이 없습니다")
+      history.back();
+    }
+    $.ajax({
+        url: '/noticedelete1',
+        type: 'POST',
+        data: {idx: idx},
+        success: () => {
+            window.location.href = '/notice';
+        },
+        error:
+        (xhr, status, error) => {
+            console.error("Error:", error);
+            alert("삭제 중 오류가 발생했습니다.");
+        }
+    });
+
+  </script>
+</body>
+</html>

@@ -310,6 +310,7 @@ public class NoticeServiceimpl implements NoticeService {
         CommentEntity commentEntity = commentRepository.save(commentDTO.tocommententity());;
         Map<String, String> result = new HashMap<>();
         result.put("userid", commentEntity.getUserid());
+        result.put("nick",commentEntity.getNick());
         result.put("commentidx", String.valueOf(commentEntity.getIdx()));
         result.put("useridx", String.valueOf(notice.getMember().getIdx()));
         result.put("regdate", String.valueOf(commentEntity.getRegdate()));

@@ -1,4 +1,3 @@
-
 $(document).ready(()=>{
     $(".announcement").on("change",()=>{
         if($(".announcement").is(":checked"))

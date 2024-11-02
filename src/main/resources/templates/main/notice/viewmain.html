@@ -44,8 +44,8 @@
             <div th:text="${notice.regdate}"></div>
           </div>
           <div class="text-center">
-            <button class="btn btn-primary" th:if="${notice.member.userid == session.userid}" th:onclick="|location.href='@{/noticemodify(idx=${notice.idx})}'|">수정</button>
-            <button class="btn btn-danger" th:if="${notice.member.userid == session.userid || session.grade == 1}" th:onclick="|location.href='@{/noticedelete(idx=${notice.idx})}'|">삭제</button>
+            <button class="btn btn-primary noticemodify" th:if="${notice.member.userid == session.userid}" th:onclick="|location.href='@{/noticemodify(idx=${notice.idx})}'|">수정</button>
+            <button class="btn btn-danger noticedelete"  th:if="${notice.member.userid == session.userid || session.grade == 1}" th:onclick="|location.href='@{/noticedelete(idx=${notice.idx},userid=${notice.member.userid})}'|">삭제</button>
             <button class="btn btn-secondary returnbtn">돌아가기</button>
           </div>
         </div>
@@ -62,8 +62,8 @@
                 <div class="d-flex align-items-center">
                   <img class="rounded-circle me-2" style="width:20px; height:20px;"
                        th:src="@{iconimg(userid=${comment.userid})}" alt="사용자 아이콘">
-                  <span th:text="${comment.nick}" class="fw-bold me-2"></span> <!-- 수정된 부분 -->
-                  <span th:text="${comment.regdate}" class="text-muted me-2"></span> <!-- 수정된 부분 -->
+                  <span th:text="${comment.nick}" class="fw-bold me-2"></span>
+                  <span th:text="${comment.regdate}" class="text-muted me-2"></span>
                   <span th:text="${comment.content}"></span>
                   &nbsp;
                   <button class="btn btn-outline-secondary btn-sm commentmodify" th:if="${comment.userid == session.userid}" th:data-idx="${comment.idx}" th:data-content="${comment.content}">수정</button>

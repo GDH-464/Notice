@@ -43,17 +43,15 @@
   });
 
 document.addEventListener("DOMContentLoaded", () => {
-    // 파일 목록 가져오기
     var files = JSON.parse(/*[[${file}]]*/ '[]');
     var existingFiles = [];
-    // 파일 추가
     files.forEach(function(fileInfo) {
         let mockFile = {
         name: fileInfo.ofile,
         size: fileInfo.size || 12345,
-        accepted: true, // 파일이 accepted 상태로 처리되도록 설정
-        status: Dropzone.SUCCESS, // Dropzone의 성공 상태로 설정
-        upload: { progress: 100, total: fileInfo.size || 12345, bytesSent: fileInfo.size || 12345 } // 업로드 완료 상태로 설정
+        accepted: true,
+        status: Dropzone.SUCCESS,
+        upload: { progress: 100, total: fileInfo.size || 12345, bytesSent: fileInfo.size || 12345 }
         };
         myDropzone.emit("addedfile", mockFile);
         myDropzone.emit("thumbnail", mockFile, `/uploads/${fileInfo.sfile}`);
@@ -89,8 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return true;
     };
     $(".onsubmit").on("submit", (event) => {
-
-        event.preventDefault(); // 기본 제출 방지
+        event.preventDefault();
         if (validateForm()) {
             const myDropzone = Dropzone.forElement("#fileDropzone");
             const formData = new FormData();

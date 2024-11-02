@@ -54,6 +54,7 @@ public class NoticeController {
             Map.of("type", 3, "action", "/weeknotice"),
             Map.of("type", 4, "action", "/monthnotice")
     );
+    private final NoticeRepository noticeRepository;
     private final FileRepository fileRepository;
     private final MemberService memberService;
     private final NoticeService noticeService;
@@ -180,7 +181,6 @@ public class NoticeController {
     }
     @PostMapping("/noticewrite_proc")
     public String noticewrite_proc(NoticeDTO notice, @RequestParam(value = "ofile",required = false) MultipartFile[] files) {
-        // 데이터 출력
         NoticeEntity notice1 =noticeService.write_proc(notice);
         if(files !=null && files.length > 0) {
             noticeService.upfile(notice1, files);
@@ -275,10 +275,21 @@ public class NoticeController {
         return ResponseEntity.ok("File uploaded successfully.");
     }
     @GetMapping("/noticedelete")
-    public String noticedelete(@RequestParam(value = "idx")Long idx)
+    public String noticedel(HttpServletRequest request,Model model,@RequestParam(value="userid") String userid,@RequestParam(value="idx")Long idx)
     {
-     noticeService.noticedelete(idx);
-     return "redirect:/notice";
+        if(memberService.setsesstion(request) != null)
+        {
+            model.addAttribute("session",memberService.setsesstion(request));
+        }
+        model.addAttribute("userid",noticeRepository.findByIdx(idx).get().getMember().getUserid());
+        model.addAttribute("idx",idx);
+        return "notice/noticedelete";
+    }
+    @PostMapping("/noticedelete1")
+    public ResponseEntity<String> noticedelete(@RequestParam(value = "idx")Long idx)
+    {
+        noticeService.noticedelete(idx);
+        return ResponseEntity.ok("success");
     }
 
 }
