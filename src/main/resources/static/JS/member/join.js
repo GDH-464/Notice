@@ -46,9 +46,7 @@
              data: JSON.stringify(data),
              dataType: 'json',
              success: successCallback,
-             error: errorCallback || (err) => {
-                 alert('error');
-             }
+
          });
      };
 

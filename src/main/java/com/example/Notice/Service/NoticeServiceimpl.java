@@ -319,7 +319,7 @@ public class NoticeServiceimpl implements NoticeService {
     @Override
     public List<CommentEntity> commentview(NoticeEntity notice)
     {
-        return commentRepository.findByNotice(notice);
+        return commentRepository.findByNoticeOrderByIdxAsc(notice);
     }
     @Override
     public Map<String, String> commentreturn(CommentreturnDTO commentreturnDTO)

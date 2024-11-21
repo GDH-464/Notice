@@ -10,5 +10,5 @@ import java.util.Optional;
 
 public interface CommentRepository extends JpaRepository<CommentEntity,Long> {
     Optional<CommentEntity> findByIdx(Long idx);
-    List<CommentEntity> findByNotice(NoticeEntity notice);
+    List<CommentEntity> findByNoticeOrderByIdxAsc(NoticeEntity notice);
 }
